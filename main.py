@@ -50,23 +50,26 @@ def measure_pairs(pairs, alice, bob):
         pairs[q].h(1)
         pairs[q].measure(1,1)
         result = execute(pairs[q], backend, shots=1, memory=True).result()
-        one_measurement = []
-        alice_measured_bit = (int(result.get_memory()[0][0]))
-        bob_measured_bit = (int(result.get_memory()[0][1]))
-        one_measurement.append(alice_measured_bit)
-        one_measurement.append(bob_measured_bit)
-        measurements.append(one_measurement)
+        one_bit_measurement = []
+        alice_measured_bit = (int(result.get_memory()[0][1]))
+        bob_measured_bit = (int(result.get_memory()[0][2]))
+        one_bit_measurement.append(alice_measured_bit)
+        one_bit_measurement.append(bob_measured_bit)
+        measurements.append(one_bit_measurement)
     return(measurements)
 
 def create_sifted_key(measurement, alice, bob):
     sifted_key = []
+    notEntangledBits = 0
     for i in range(n):
         if (alice[i] == bob[i] == 0) or (alice[i] == bob[i] == 2):
             sifted_bit = []
             sifted_bit.append(measurement[i][0])
             sifted_bit.append(measurement[i][1])
             sifted_key.append(sifted_bit)
-    return(sifted_key, "length of sifted key is " + str(len(sifted_key)))
+            if measurement[i][0] == measurement[i][1]:
+                notEntangledBits += 1
+    return(sifted_key, "length of sifted key is " + str(len(sifted_key)) + " " + "number of bits not perfectly entangled: "+ str(notEntangledBits))
 
 def expected_value(measurement, alice, bob, alice_setting, bob_setting):
     pp = 0
@@ -104,11 +107,13 @@ def eve_drop(pairs, eve):
         
 def eve_detected(s_value):
     if s_value > 2.8:
-        print("eve went undetected")
+        print("Eve went undetected")
     elif 2.5 < s_value <= 2.8:
-        print("eve is maybe evedropping but could be just be noise")
+        print("it is possible that Eve is evesdropping but could be just be noise")
+    elif 1.9 < s_value <= 2.5:
+        print("it is likely that Eve is evesdropping")
     else:
-        print("eve is most likely evedropping")
+        print("Eve is almost certanily evedropping")
         
 message = create_eprPairs()
 #eve_drop(message, eve_bits) 
