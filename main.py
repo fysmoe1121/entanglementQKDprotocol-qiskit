@@ -6,13 +6,13 @@ import numpy as np
 import matplotlib
 from math import pi
 
-np.random.seed(seed=10)
-n = 100
+np.random.seed(seed=13)
+n = 1000
 alice_bases = randint(3, size=n)
 print(alice_bases)
 
-np.random.seed(seed=11)
-n = 100
+np.random.seed(seed=15)
+n = 1000
 bob_bases = randint(3, size=n)
 print(bob_bases)
 
@@ -93,7 +93,7 @@ def CHSH_calc(measurements, alice, bob):
     S -= expected_value(measurements,alice,bob,1,1)
     return(abs(S))
 
-eve_bits = random.sample(range(n),n/4)
+eve_bits = random.sample(range(n),n//10)
 eve_bits.sort()
 print(eve_bits)
 
@@ -102,15 +102,19 @@ def eve_drop(pairs, eve):
         pairs[i].measure(0,2)
         pairs[i].barrier()
         
-def eve_dectected(s_value):
+def eve_detected(s_value):
     if s_value > 2.8:
-        print("eve went undetetcted")
+        print("eve went undetected")
     elif 2.5 < s_value <= 2.8:
-        print("eve is maybe evedropping")
+        print("eve is maybe evedropping but could be just be noise")
     else:
-        print("eve is probably evedropping")
+        print("eve is most likely evedropping")
         
-
-    
-
-  
+message = create_eprPairs()
+#eve_drop(message, eve_bits) 
+output = measure_pairs(message, alice_bases, bob_bases)
+key = create_sifted_key(output, alice_bases, bob_bases)
+s = CHSH_calc(output, alice_bases, bob_bases)
+print(key)
+print(s)
+eve_detected(s)
