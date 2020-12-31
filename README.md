@@ -7,7 +7,7 @@ Ekert Protocol aka EPR Protocol implementation in Qiskit.
 
 3. measures the state of the qubits using Alice and Bob choice of basis measurements 
 
-4. creates sifted key when Alice and Bob measure along compadiable basis vectors
+4. creates sifted key when Alice and Bob measure along compatible basis vectors
 
 5. uses rest of the bits to perform CHSH test and calculates S.
 
