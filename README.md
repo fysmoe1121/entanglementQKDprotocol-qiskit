@@ -1,9 +1,9 @@
 # ekertProtocol
-Ekert Protocl implementation in Qiskit.
+Ekert Protocol implementation in Qiskit.
 
 1. generates Alice and Bob choice of basis vectors to perform their measurement
 
-2. creates n entangled qubits in the psi- Bell state
+2. creates n entangled qubits in the |psi-> Bell state
 
 3. measures the state of the qubits using Alice and Bob choice of basis measurements 
 
