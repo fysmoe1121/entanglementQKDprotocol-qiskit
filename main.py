@@ -110,7 +110,7 @@ def eve_detected(s_value):
         print("Eve went undetected")
     elif 2.5 < s_value <= 2.8:
         print("it is possible that Eve is evesdropping but could be just be noise")
-    elif 1.9 < s_value <= 2.5:
+    elif 2 < s_value <= 2.5:
         print("it is likely that Eve is evesdropping")
     else:
         print("Eve is almost certanily evedropping")
