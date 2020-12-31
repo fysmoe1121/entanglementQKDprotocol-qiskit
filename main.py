@@ -6,13 +6,13 @@ import numpy as np
 import matplotlib
 from math import pi
 
-np.random.seed(seed=13)
 n = 100
+
+np.random.seed(seed=13)
 alice_bases = randint(3, size=n)
 print(alice_bases)
 
 np.random.seed(seed=15)
-n = 100
 bob_bases = randint(3, size=n)
 print(bob_bases)
 
