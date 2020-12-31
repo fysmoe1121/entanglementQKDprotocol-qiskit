@@ -1,5 +1,5 @@
 # ekertProtocol
-Ekert Protocol implementation in Qiskit.
+Ekert Protocol or EPR Protocol implementation in Qiskit.
 
 1. generates Alice and Bob choice of basis vectors to perform their measurement
 
