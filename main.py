@@ -69,7 +69,7 @@ def create_sifted_key(measurement, alice, bob):
             sifted_key.append(sifted_bit)
             if measurement[i][0] == measurement[i][1]:
                 notEntangledBits += 1
-    return(sifted_key, "length of sifted key is " + str(len(sifted_key)) + " " + "number of bits not perfectly entangled: "+ str(notEntangledBits))
+    return(sifted_key, "length of sifted key is " + str(len(sifted_key)) + ". " + "number of bits not perfectly entangled: "+ str(notEntangledBits))
 
 def expected_value(measurement, alice, bob, alice_setting, bob_setting):
     pp = 0
