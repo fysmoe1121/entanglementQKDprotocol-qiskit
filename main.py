@@ -7,12 +7,12 @@ import matplotlib
 from math import pi
 
 np.random.seed(seed=13)
-n = 1000
+n = 100
 alice_bases = randint(3, size=n)
 print(alice_bases)
 
 np.random.seed(seed=15)
-n = 1000
+n = 100
 bob_bases = randint(3, size=n)
 print(bob_bases)
 
@@ -96,7 +96,7 @@ def CHSH_calc(measurements, alice, bob):
     S -= expected_value(measurements,alice,bob,1,1)
     return(abs(S))
 
-eve_bits = random.sample(range(n),n//10)
+eve_bits = random.sample(range(n),n//4)
 eve_bits.sort()
 print(eve_bits)
 
