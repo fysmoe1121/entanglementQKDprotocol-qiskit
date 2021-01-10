@@ -102,7 +102,7 @@ print(eve_bits)
 
 def eve_drop(pairs, eve):
     for i in eve:
-        pairs[i].measure(0,2)
+        pairs[i].measure(1,2)
         pairs[i].barrier()
         
 def eve_detected(s_value):
@@ -115,6 +115,74 @@ def eve_detected(s_value):
     else:
         print("Eve is almost certanily evedropping")
         
+def encode_message(bits, bases):
+    message = []
+    for i in range(n):
+        qc = QuantumCircuit(1,1)
+        if bases[i]== 0:
+            if bits[i] == 0:
+                pass 
+            else:
+                qc.x(0)
+        else:
+            if bits[i] == 0:
+                qc.h(0)
+            else:
+                qc.x(0)
+                qc.h(0)
+        qc.barrier()
+        message.append(qc)
+    return message
+                
+ def measure_message(message, bases):
+    IBMQ.load_account()
+    from qiskit.providers.ibmq import least_busy
+    from qiskit.tools.monitor import job_monitor
+    provider = IBMQ.get_provider(hub='ibm-q')
+    backend = provider.get_backend('ibmq_vigo')
+    measurements = []
+    for q in range(n):
+        if bases[q] == 0:
+            message[q].measure(0,0)
+        if bases[q] == 1:
+            message[q].h(0)
+            message[q].measure(0,0)
+        result = execute(message[q], backend, shots=1, memory=True).result()
+        result_monitor(result)
+        measured_bit = int(result.get_memory()[0])
+        measurements.append(measured_bit
+    return measurements
+                            
+def createBB84SiftedKey(a_bases, b_bases, bits):
+    good_bits = []
+    for q in range(n):
+        if a_bases[q] == b_bases[q]:
+            good_bits.append(bits[q])
+    return good_bits 
+                            
+def sample_bits(bits, selection):
+    sample = []
+    for i in selection:
+        i = np.mod(i, len(bits))
+        sample.append(bits.pop(i))
+    return sample
+                            
+def passErrorThreshold(alice_bits, bob_bits, t):
+    counter = 0
+    for i in range(alice_bits):
+        if alice_bits[i] != bob_bits[i]:
+            counter+=1
+    if (counter > t):
+        return(True)
+    else:
+        return(False)
+                                   
+def BB84Detection(alice_bits, bob_bits, t)
+    if passErrorThreshold(alice_bits, bob_bits, t):
+        print("Eve's interference was detected.")
+    else:
+        print("Eve went undetected!")
+                            
 message = create_eprPairs()
 #eve_drop(message, eve_bits) 
 output = measure_pairs(message, alice_bases, bob_bases)
